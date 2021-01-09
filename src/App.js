@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
 
 import { useState, useRef } from 'react'
+import Modal from './Components/Modal/Modal'
 import { data } from './Components/Data/Data'
 import { Katmon } from './Components/Katmon/Katmon'
 
@@ -13,6 +14,9 @@ function App() {
 	const refSum = useRef()
 	const refComment = useRef()
 	const refType = useRef()
+
+	const [openModal, setOpenModal] = useState('')
+	const [dataForEdit, setDataForEdit] = useState(false)
 
 	const createData = (evt) => {
 		if(refSum.current.value.length === 0 || refComment.current.value.length === 0)
@@ -32,6 +36,12 @@ function App() {
 	const deleteData = (evt) => {
 		katmon.deleteData = evt.currentTarget.dataset.id
 		setDatabase([...database])
+	}
+
+	const openEditData = (evt) => {
+		setDataForEdit(katmon.getData(evt.currentTarget.dataset.id))
+		setOpenModal(true)
+		// katmon.editData = evt.currentTarget.dataset.id
 	}
 
   return (
@@ -56,20 +66,28 @@ function App() {
 
 	      <ul className="list-group w-50 mt-4">
 		      {
-		      	database.sort((a, b) => b - a).map(d => <li className="list-group-item p-1 d-flex justify-content-between align-items-center" key={d.id}>
-									      		
-									      		<div className="d-flex justify-content-between w-100 mr-2">
-										      		<div>{d.comment}</div>
-										      		<div>{(d.type !== 'income' ? '-' : '') + d.sum}</div>
-									      		</div>
-								      			
-								      			<button className="btn btn-warning btn-sm" data-id={ d.id }>edit</button>
-								      			<button className="btn btn-danger btn-sm ml-2" onClick={ deleteData } data-id={ d.id }>delete</button>
-								      		</li>)
+		      	database.sort((a, b) => b - a).map(d => {
+		      		return (
+		      			<li className="list-group-item p-1 d-flex justify-content-between align-items-center" key={d.id}>
+				      		<div className="d-flex justify-content-between w-100 mr-2">
+					      		<div>{d.comment}</div>
+					      		<div>{(d.type !== 'income' ? '-' : '') + d.sum}</div>
+				      		</div>
+			      			<button className="btn btn-warning btn-sm" onClick={ openEditData } data-id={ d.id }>edit</button>
+			      			<button className="btn btn-danger btn-sm ml-2" onClick={ deleteData } data-id={ d.id }>delete</button>
+			      		</li>
+		      		)
+		      	})
 		      }
 	      	
 	      </ul>
     	</div> {/*End of container*/}
+
+    	<Modal classVal={ openModal } modalController={ setOpenModal }>
+    		{
+					Boolean(dataForEdit) ? dataForEdit : ''
+    		}
+    	</Modal>
     </>
   );
 }
