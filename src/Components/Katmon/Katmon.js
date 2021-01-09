@@ -25,9 +25,9 @@ class Katmon {
 		this.database.splice(this.database.findIndex(data => data.id === Number(id)), 1)
 	}
 
-	set setEdit(id) {
+	set editData(id) {
 		let needToEdit = this.database.findIndex(data => data.id === Number(id))
-		console.log(needToEdit)	
+		console.log(needToEdit)
 	}
 
 	//* set states *//
@@ -41,6 +41,10 @@ class Katmon {
 
 	set setType(typeVal) {
 		this.type = typeVal
+	}
+
+	getData(id) {
+		return this.database.find(data => data.id === Number(id))
 	}
 
 	/**Utilities**/
