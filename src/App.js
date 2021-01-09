@@ -38,10 +38,14 @@ function App() {
 		setDatabase([...database])
 	}
 
+	const editData = (param) => {
+		console.log(param)
+		// katmon.editData = evt.currentTarget.dataset.id
+	}
+
 	const openEditData = (evt) => {
 		setDataForEdit(katmon.getData(evt.currentTarget.dataset.id))
 		setOpenModal(true)
-		// katmon.editData = evt.currentTarget.dataset.id
 	}
 
   return (
@@ -58,7 +62,7 @@ function App() {
 		      		<option value="expenses">Expenses</option>
 		      		<option value="income">Income</option>
 		      	</select>
-			      <input className="form-control mx-2" ref={ refSum } type="text" placeholder="Sum" />
+			      <input className="form-control mx-2" ref={ refSum } type="number" placeholder="Sum" />
 			      <input className="form-control mr-2" ref={ refComment } type="text" placeholder="Comment" />
 		      	<button className="btn btn-success" onClick={ createData }><b>Add</b></button>
 	      	</div>
@@ -83,7 +87,7 @@ function App() {
 	      </ul>
     	</div> {/*End of container*/}
 
-    	<Modal classVal={ openModal } modalController={ setOpenModal }>
+    	<Modal classVal={ openModal } modalController={ setOpenModal } editDataController={ editData } >
     		{
 					Boolean(dataForEdit) ? dataForEdit : ''
     		}

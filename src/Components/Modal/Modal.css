@@ -19,7 +19,7 @@
   min-height: 200px;
   padding: 18px;
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .modal-body__date {
@@ -33,5 +33,13 @@
 
 .modalComp .form-control {
   padding: 0;
+}
+
+.input-data {
+  border-bottom: 1px solid #6c757d !important;
+}
+
+.text-muted-input {
+  min-height: 20px;
 }
 
