@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { data } from './Components/Data/Data'
 import { Katmon } from './Components/Katmon/Katmon'
 
@@ -9,35 +9,67 @@ function App() {
 
 	const [database, setDatabase] = useState([...data])
 	const katmon = new Katmon(database)
+	
+	const refSum = useRef()
+	const refComment = useRef()
+	const refType = useRef()
 
-	// console.log(katmon)
+	const createData = (evt) => {
+		if(refSum.current.value.length === 0 || refComment.current.value.length === 0)
+			return
+
+		katmon.setData = refSum.current.value
+		katmon.setComment = refComment.current.value
+		katmon.setIsCompleted = false
+		katmon.setType = refType.current.value
+
+		setDatabase([katmon, ...database])
+
+		refSum.current.value = ''
+		refComment.current.value = ''
+	}
+
+	const deleteData = (evt) => {
+		katmon.deleteData = evt.currentTarget.dataset.id
+		setDatabase([...database])
+	}
 
   return (
     <>
-    	<div className="bg-primary p-4 w-100">
+    	<div className="bg-primary p-2 w-100">
     		<div className='h3 text-white'>Katmon</div>
     	</div>
 
-    	<div className="container d-flex flex-column justify-content-center align-items-center">
+    	<div className="container d-flex flex-column justify-content-center align-items-center mb-4">
 	      
-	      <div className="text-input form-group d-flex mt-4 align-items-center">
-	      	<div className="mr-3">
-			      <input className="form-control mb-1" type="text" placeholder="Sum" />
-			      <input className="form-control" type="text" placeholder="Comment" />
+	      <div className="text-input form-group mt-3">
+	      	<div className="d-flex align-items-center mr-3">
+		      	<select className="form-control" ref={ refType }>
+		      		<option value="expenses">Expenses</option>
+		      		<option value="income">Income</option>
+		      	</select>
+			      <input className="form-control mx-2" ref={ refSum } type="text" placeholder="Sum" />
+			      <input className="form-control mr-2" ref={ refComment } type="text" placeholder="Comment" />
+		      	<button className="btn btn-success" onClick={ createData }><b>Add</b></button>
 	      	</div>
-	      	<button className="btn btn-success"><b>Add</b></button>
 	      </div>
 
 	      <ul className="list-group w-50 mt-4">
 		      {
-		      	data.map(d => <li className="list-group-item d-flex justify-content-between" key={d.id}>
-									      		<div>{d.comment}</div>
-									      		<div>{d.sum}</div>
+		      	database.sort((a, b) => b - a).map(d => <li className="list-group-item p-1 d-flex justify-content-between align-items-center" key={d.id}>
+									      		
+									      		<div className="d-flex justify-content-between w-100 mr-2">
+										      		<div>{d.comment}</div>
+										      		<div>{(d.type !== 'income' ? '-' : '') + d.sum}</div>
+									      		</div>
+								      			
+								      			<button className="btn btn-warning btn-sm" data-id={ d.id }>edit</button>
+								      			<button className="btn btn-danger btn-sm ml-2" onClick={ deleteData } data-id={ d.id }>delete</button>
 								      		</li>)
 		      }
 	      	
 	      </ul>
-    	</div>
+    	</div> {/*End of container*/}
     </>
   );
 }
