@@ -22,7 +22,7 @@ function App() {
 		if(refSum.current.value.length === 0 || refComment.current.value.length === 0)
 			return
 
-		katmon.setData = refSum.current.value
+		katmon.insert = refSum.current.value
 		katmon.setComment = refComment.current.value
 		katmon.setIsCompleted = false
 		katmon.setType = refType.current.value
@@ -38,9 +38,12 @@ function App() {
 		setDatabase([...database])
 	}
 
-	const editData = (param) => {
-		console.log(param)
-		// katmon.editData = evt.currentTarget.dataset.id
+	const editData = ({ id, sum, comment }) => {
+		katmon.editData = {
+			id: id,
+			sum: sum,
+			comment: comment
+		}
 	}
 
 	const openEditData = (evt) => {
