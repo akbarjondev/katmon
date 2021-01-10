@@ -1,11 +1,22 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 import './Modal.css'
 
 function Modal({ children, classVal, modalController, editDataController }) {
 
+	const [id, setId] = useState('')
 	const [sum, setSum] = useState('')
 	const [comment, setComment] = useState('')
+
+	useEffect(() => {
+		setId(children.id)
+		setSum(children.sum)
+		setComment(children.comment)
+
+		refSumInput.current.value = null
+		refCommentInput.current.value = null
+	}, [ children ])
+
 
 	const refSumInput = useRef()
 	const refCommentInput = useRef()
@@ -20,9 +31,12 @@ function Modal({ children, classVal, modalController, editDataController }) {
 		setComment(refCommentInput.current.value)
 		
 		editDataController({
-			sum: refSumInput.current.value,
-			comment: refCommentInput.current.value
+			id: id,
+			sum: refSumInput.current.value || sum,
+			comment: refCommentInput.current.value || comment
 		})
+
+		closeModal()
 	}
 
 	const realTimeEdit = (evt) => {
