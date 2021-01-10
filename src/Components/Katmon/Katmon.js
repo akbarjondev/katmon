@@ -14,7 +14,7 @@ class Katmon {
 	}
 
 	//* set behaviours *//
-	set setData(sumVal) {
+	set insert(sumVal) {
 		this.sum = sumVal
 		
 		this.id = (new Date()).getTime()
@@ -25,10 +25,13 @@ class Katmon {
 		this.database.splice(this.database.findIndex(data => data.id === Number(id)), 1)
 	}
 
-	set editData(id) {
+	set editData({ id, sum, comment }) {
 		let needToEdit = this.database.findIndex(data => data.id === Number(id))
-		console.log(needToEdit)
+
+		this.database[needToEdit].sum = sum
+		this.database[needToEdit].comment = comment
 	}
+
 
 	//* set states *//
 	set setComment(commentVal) {
