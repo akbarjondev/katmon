@@ -4,7 +4,7 @@ import './App.css';
 import { useState, useRef } from 'react'
 import Modal from './Components/Modal/Modal'
 import { data } from './Components/Data/Data'
-import { Katmon } from './Components/Katmon/Katmon'
+import Katmon from './Components/Katmon/Katmon'
 
 function App() {
 

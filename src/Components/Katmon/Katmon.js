@@ -57,4 +57,5 @@ class Katmon {
 	}
 }
 
-module.exports.Katmon = Katmon
+// module.exports.Katmon = Katmon
+export default Katmon
