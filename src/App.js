@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
+import logo from './Img/wallet-icon.png'
+import logoLarge from './Img/wallet-icon@2x.png'
 
 import { useState, useRef } from 'react'
 import Modal from './Components/Modal/Modal'
@@ -54,7 +56,12 @@ function App() {
   return (
     <>
     	<div className="bg-primary p-2 w-100">
-    		<div className='h3 text-white'>Katmon</div>
+    		<div className='h3 text-white'>
+    			<a className="logo" href="index.html">
+    				<img className="logo__img" src={ logo } srcSet={ `${logo} 1x, ${logoLarge} 2x` } width="45" height="45" alt="Logo Katmon" />
+    				<div className="logo__name">Katmon</div>
+    			</a>
+    		</div>
     	</div>
 
     	<div className="container d-flex flex-column justify-content-center align-items-center mb-4">

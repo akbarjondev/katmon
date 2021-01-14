@@ -40,3 +40,24 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo__img {
+  width: 40px;
+  height: 40px;
+}
+
+.logo__name {
+  margin-left: 10px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.logo:hover {
+  text-decoration: none;
+  opacity: 0.8;
+}
